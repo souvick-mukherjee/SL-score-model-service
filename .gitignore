@@ -1,0 +1,43 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# PyCharm project settings
+.idea/
+
+## Model files (optional: if large or sensitive)
+#*.pkl
+#*.joblib
+#*.h5
+#*.pt
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Test coverage or profiling
+htmlcov/
+coverage.xml
+*.cover
+.cache/
+
+# Jupyter Notebook checkpoints (if you use notebooks for training)
+.ipynb_checkpoints/
+
+# Data files (optional)
+data/
+*.csv
+*.tsv
+*.json
+*.zip
