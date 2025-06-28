@@ -1,6 +1,22 @@
 from fastapi import FastAPI
-from app.routes import example
+from fastapi.staticfiles import StaticFiles
+from app.api.v1.routes import router
 
 app = FastAPI()
 
-app.include_router(example.router)
+print("🎯 FastAPI is starting up")
+
+
+@app.get("/ping")
+def ping():
+    return {"pong": True}
+
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello from FastAPI"}
+
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+app.include_router(router, prefix="/api/v1")
