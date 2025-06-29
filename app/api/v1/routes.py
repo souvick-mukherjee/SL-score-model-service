@@ -12,6 +12,7 @@ def get_map():
     file_path = os.path.join("app", "static", "boston_h3_clusters_map.html")
     return FileResponse(file_path, media_type="text/html")
 
+
 @router.post("/score")
 def score_coordinates(data: CoordinateList):
     group_results = []
@@ -19,10 +20,14 @@ def score_coordinates(data: CoordinateList):
         group_set = []
         for coord in group.coordinates:
             scored = scoring_service.predict_scores([coord.model_dump()])[0]
-            group_set.append(f"{{{coord.lat}, {coord.lon}, {scored['score']}}}")
-        group_results.append("{" + ",".join(group_set) + "}")
-    java_set = "{" + ",".join(group_results) + "}"
-    return java_set
+            group_set.append(ScoredCoordinate(
+                lat=coord.lat,
+                lon=coord.lon,
+                score=scored['score'],
+                confidence=scored.get('confidence', 1.0)
+            ))
+        group_results.append(group_set)
+    return group_results
 
 
 @router.get("/healthcheck")
