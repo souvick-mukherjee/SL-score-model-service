@@ -21,6 +21,7 @@ else:
 
 
 def predict_scores(coordinates: list[dict]) -> list[dict]:
+    print("Received coords:", coordinates)
     results = []
     for coord in coordinates:
         score, confidence = predict_safety_score(coord['lat'], coord['lon'], model, cluster_map, debug=False)
@@ -30,4 +31,5 @@ def predict_scores(coordinates: list[dict]) -> list[dict]:
             "score": score,
             "confidence": confidence
         })
+    print("Prediction results:", results)
     return results

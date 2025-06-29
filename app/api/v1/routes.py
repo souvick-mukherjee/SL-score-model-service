@@ -9,15 +9,20 @@ router = APIRouter()
 
 @router.get("/map")
 def get_map():
-    file_path = os.path.join("app", "static", "boston_h3_clustered_map.html")
+    file_path = os.path.join("app", "static", "boston_h3_clusters_map.html")
     return FileResponse(file_path, media_type="text/html")
 
-
-@router.post("/score", response_model=ScoringResponse)
+@router.post("/score")
 def score_coordinates(data: CoordinateList):
-    coords = [coord.dict() for coord in data.coordinates]
-    results = scoring_service.predict_scores(coords)
-    return {"results": results}
+    group_results = []
+    for group in data.root:
+        group_set = []
+        for coord in group.coordinates:
+            scored = scoring_service.predict_scores([coord.model_dump()])[0]
+            group_set.append(f"{{{coord.lat}, {coord.lon}, {scored['score']}}}")
+        group_results.append("{" + ",".join(group_set) + "}")
+    java_set = "{" + ",".join(group_results) + "}"
+    return java_set
 
 
 @router.get("/healthcheck")
