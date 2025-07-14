@@ -124,11 +124,11 @@ def create_features(df, cluster_map):
     return feature_df
 
 
-def predict_safety_score(lat, lon, model, cluster_map, debug=True):
-    h3_index = h3.latlng_to_cell(lat, lon, 9)
+def predict_safety_score(lat, lng, model, cluster_map, debug=True):
+    h3_index = h3.latlng_to_cell(lat, lng, 9)
 
     if debug:
-        print(f"\nPredicting for coordinates: {lat}, {lon}")
+        print(f"\nPredicting for coordinates: {lat}, {lng}")
         print(f"H3 Index: {h3_index}")
 
     # Get center score
@@ -221,10 +221,10 @@ def main():
     ]
 
     print("\nTesting predictions:")
-    for lat, lon in test_coordinates:
+    for lat, lng in test_coordinates:
         print(f"\n{'=' * 50}")
-        score, confidence = predict_safety_score(lat, lon, model, cluster_map)
-        print(f"Location: {lat}, {lon}")
+        score, confidence = predict_safety_score(lat, lng, model, cluster_map)
+        print(f"Location: {lat}, {lng}")
         print(f"Final Safety Score (1=least safe, 10=safest): {score}")
         print(f"Prediction Confidence: {confidence:.2f}")
 # [Rest of your code remains the same]

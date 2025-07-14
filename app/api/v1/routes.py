@@ -16,7 +16,7 @@ def get_map():
 @router.post("/score")
 def score_coordinates(data: CoordinateList):
     for idx, group in enumerate(data.root, start=1):
-        coords = [(coord.lat, coord.lon) for coord in group.coordinates]
+        coords = [(coord.lat, coord.lng) for coord in group.coordinates]
         print(f"route{idx}: {coords}")
     group_results = []
     for group in data.root:
@@ -25,7 +25,7 @@ def score_coordinates(data: CoordinateList):
             scored = scoring_service.predict_scores([coord.model_dump()])[0]
             group_set.append(ScoredCoordinate(
                 lat=coord.lat,
-                lon=coord.lon,
+                lng=coord.lng,
                 score=scored['score'],
                 confidence=scored.get('confidence', 1.0)
             ))

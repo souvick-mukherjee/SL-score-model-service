@@ -24,10 +24,10 @@ def predict_scores(coordinates: list[dict]) -> list[dict]:
     print("Received coords:", coordinates)
     results = []
     for coord in coordinates:
-        score, confidence = predict_safety_score(coord['lat'], coord['lon'], model, cluster_map, debug=False)
+        score, confidence = predict_safety_score(coord['lat'], coord['lng'], model, cluster_map, debug=False)
         results.append({
             "lat": coord['lat'],
-            "lon": coord['lon'],
+            "lng": coord['lng'],
             "score": score,
             "confidence": confidence
         })

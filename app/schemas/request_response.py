@@ -4,7 +4,7 @@ from typing import List
 
 class Coordinate(BaseModel):
     lat: float
-    lon: float
+    lng: float
 
 class CoordinateGroup(BaseModel):
     coordinates: List[Coordinate]
@@ -15,7 +15,7 @@ class CoordinateList(RootModel[list[CoordinateGroup]]):
 
 class ScoredCoordinate(BaseModel):
     lat: float
-    lon: float
+    lng: float
     score: int
     confidence: float
 
